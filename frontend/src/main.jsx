@@ -1,0 +1,8 @@
+import React, { useMemo, useState } from 'react';
+import { createRoot } from 'react-dom/client';
+import './styles.css';
+const copy = { en: { title: 'Education Scholarship Portal', intro: 'District overview', schools: 'Top schools by enrollment', students: 'Students', paid: 'Scholarships paid' }, gu: { title: 'શિક્ષણ શિષ્યવૃત્તિ પોર્ટલ', intro: 'જિલ્લા ઝાંખી', schools: 'નોંધણી પ્રમાણે ટોચની શાળાઓ', students: 'વિદ્યાર્થીઓ', paid: 'ચૂકવેલ શિષ્યવૃત્તિઓ' } };
+const records = [{ name: 'Navrang School', students: 1240 }, { name: 'Riverdale School', students: 980 }, { name: 'Sardar Vidyalaya', students: 760 }];
+function App() { const [lang, setLang] = useState('en'); const t = copy[lang]; const total = useMemo(() => records.reduce((n, x) => n + x.students, 0), []); return <main><a className="skip" href="#content">Skip to content</a><header><div><h1>{t.title}</h1><p>{t.intro}</p></div><label>Language <select value={lang} onChange={e => setLang(e.target.value)} aria-label="Choose language"><option value="en">English</option><option value="gu">ગુજરાતી</option></select></label></header><section id="content" className="metrics" aria-label="Dashboard metrics"><article><strong>{total.toLocaleString()}</strong><span>{t.students}</span></article><article><strong>₹ 18.4L</strong><span>{t.paid}</span></article></section><section><h2>{t.schools}</h2><table><thead><tr><th scope="col">School</th><th scope="col">Enrollment</th></tr></thead><tbody>{records.map(s => <tr key={s.name}><td>{s.name}</td><td>{s.students.toLocaleString()}</td></tr>)}</tbody></table></section></main> }
+createRoot(document.getElementById('root')).render(<App />);
+
